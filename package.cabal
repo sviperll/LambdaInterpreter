@@ -1,0 +1,36 @@
+Name:          LambdaInterpreter
+Version:       3.6
+Cabal-Version: >= 1.2
+build-type:          Simple
+category:            Education
+License:             GPL
+License-File:        COPYING.txt
+Author:              Victor Nazarov <asviraspossible@gmail.com>
+Homepage:
+Category:            Education
+Synopsis:            An interpeter for lambda calculus and combinatory logic
+Data-Dir:            data
+Data-Files:          examples.txt
+                     environment.txt
+                     interpreter.glade
+Extra-Source-Files:  README.txt
+
+Executable lambda-interpreter
+  Main-Is:        Main.hs
+  Build-Depends:  base >= 4.0,
+                  containers >= 0.2,
+                  mtl >= 1.1.0.2,
+                  parsec >= 3.0.0,
+                  gtk >= 0.10,
+                  glade >= 0.10,
+                  time >= 1.1.2.2,
+                  utf8-string >= 0.3.4
+  Hs-Source-Dirs: src
+  other-modules:  Lambda
+                  Lambda.Common
+                  Lambda.Eval
+                  Lambda.Parser
+                  Lambda.Show
+                  Lambda.Zipper
+                  Data.History
+                  UI
