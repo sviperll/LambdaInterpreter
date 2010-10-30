@@ -1,47 +1,48 @@
-если \a. a
-истина \a b. a
-ложь \a b. b
+if \a. a
+true \a b. a
+false \a b. b
 const \a b. a
 
-ноль        \f x. x
-один         \f x. f x
-два         \f x. f (f x)
-три       \f x. f (f (f x))
-четыре        \f x. f (f (f (f x)))
-пять        \f x. f (f (f (f (f x))))
-шесть         \f x. f (f (f (f (f (f x)))))
-семь       \f x. f (f (f (f (f (f (f x))))))
-восемь       \f x. f (f (f (f (f (f (f (f x)))))))
-девять        \f x. f (f (f (f (f (f (f (f (f x))))))))
-десять         \f x. f (f (f (f (f (f (f (f (f (f x)))))))))
-одиннадцать      \f x. f (f (f (f (f (f (f (f (f (f (f x))))))))))
-двенадцать      \f x. f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))
-тринадцать    \f x. f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))
-четырнадцать    \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))
-пятнадцать     \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))
-шестнадцать     \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))
-семнадцать   \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))
-восемнадцать    \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))
-девятнадцать    \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))
-двадцать      \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))
-двадцатьодин   \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))))
-двадцатьдва   \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))))
-двадцатьтри \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))))))
-двадцатьчетыре  \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))))))
+zero        \f x. x
+one         \f x. f x
+two         \f x. f (f x)
+three       \f x. f (f (f x))
+four        \f x. f (f (f (f x)))
+five        \f x. f (f (f (f (f x))))
+six         \f x. f (f (f (f (f (f x)))))
+seven       \f x. f (f (f (f (f (f (f x))))))
+eight       \f x. f (f (f (f (f (f (f (f x)))))))
+nine        \f x. f (f (f (f (f (f (f (f (f x))))))))
+ten         \f x. f (f (f (f (f (f (f (f (f (f x)))))))))
+eleven      \f x. f (f (f (f (f (f (f (f (f (f (f x))))))))))
+twelve      \f x. f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))
+thirteen    \f x. f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))
+fourteen    \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))
+fifteen     \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))
+sixteen     \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))
+seventeen   \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))
+eighteen    \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))
+nineteen    \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))
+twenty      \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))
+twentyone   \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))))
+twentytwo   \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))))
+twentythree \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))))))
+twentyfore  \f x. f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))))))
 
-сложить \m n. \f x. m f (n f x)
-перемножить \m n. \f x. m (n f) x
-возвести \m n. n m 
-предыдущий \n.\f.\x. n (\g.\h. h (g f)) (\u. x) (\u. u)
-этоноль \n. n (const ложь) истина
+add \m n. \f x. m f (n f x)
+mull \m n. \f x. m (n f) x
+exp \m n. n m 
+pred \n.\f.\x. n (\g.\h. h (g f)) (\u. x) (\u. u)
+iszero \n. n (const false) true
 
 Y \f. (\x. f (x x)) (\x. f (x x))
 
-факториал Y (\факториал n. если (этоноль n) один (перемножить (факториал (предыдущий n)) n))
+factorial Y (\factorial n. if (iszero n) one (mul (factorial (pred n)) n))
 
 cons \hd tl. \v f. f hd tl
 nil \v f. v
-голова \xs. xs undefined (\hd tl. hd)
-хвост \xs. xs undefined (\hd tl. tl)
-свёрткапр Y (\свёрткапр. \v f. \xs. xs v (\hd tl. f hd (свёрткапр v f tl)))
-сумма свёрткапр ноль сложить
+head \xs. xs undefined (\hd tl. hd)
+tail \xs. xs undefined (\hd tl. tl)
+foldr Y (\foldr. \v f. \xs. xs v (\hd tl. f hd (foldr v f tl)))
+sum foldr zero add
+

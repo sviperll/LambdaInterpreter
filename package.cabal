@@ -32,5 +32,4 @@ Executable lambda-interpreter
                   Lambda.Parser
                   Lambda.Show
                   Lambda.Zipper
-                  Data.History
                   UI

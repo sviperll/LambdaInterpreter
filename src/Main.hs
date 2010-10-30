@@ -75,19 +75,19 @@ setupEnvironmentUI env xml window =
           let parseRes = Parsec.parse (skipMany space >> Lambda.nameParser >>= \t -> skipMany space >> eof >> return t) "" nameText
           case parseRes of
             (Left err) ->
-              do msgBox (Just window) [] MessageWarning ButtonsOk $ "Недопустимое имя: " ++ show err
+              do msgBox (Just window) [] MessageWarning ButtonsOk $ "Wrong name: " ++ show err
                  return ()
             (Right name) ->
                do valueText <- get entryValue entryText
                   let parseRes = Parsec.parse (skipMany space >> Lambda.parser >>= \t -> skipMany space >> eof >> return t) "" valueText
                   case parseRes of
                     (Left err) -> 
-                      do msgBox (Just window) [] MessageWarning ButtonsOk $ "Недопустимое значение: " ++ show err
+                      do msgBox (Just window) [] MessageWarning ButtonsOk $ "Wrong value: " ++ show err
                          return ()
                     (Right value) ->
                       do env <- readIORef envIORef
                          if Map.member name env
-                           then msgBox (Just window) [] MessageWarning ButtonsOk "Значение с таким именем уже существует" >> return ()
+                           then msgBox (Just window) [] MessageWarning ButtonsOk "Value with given name already exists" >> return ()
                            else do env <- readIORef envIORef
                                    updateEnv $ Map.insert name value env
                                    
@@ -115,8 +115,8 @@ setupEnvTreeView xml =
       col1 <- GtkMV.treeViewColumnNew
       col2 <- GtkMV.treeViewColumnNew
 
-      GtkMV.treeViewColumnSetTitle col1 "Имя"
-      GtkMV.treeViewColumnSetTitle col2 "Значение"
+      GtkMV.treeViewColumnSetTitle col1 "Name"
+      GtkMV.treeViewColumnSetTitle col2 "Value"
 
       renderer1 <- GtkMV.cellRendererTextNew
       renderer2 <- GtkMV.cellRendererTextNew
@@ -172,7 +172,7 @@ setupEvaluatorUI examples xml window getEnv =
               end <- getCurrentTime
               time <- readIORef timeElapsedIORef
               let time' = time + diffUTCTime end start
-                  msg = "Время вычислений: " ++ show time'
+                  msg = "Duration of evaluation: " ++ show time'
               writeIORef timeElapsedIORef time'
               contextId <- statusbarGetContextId statusbar msg
               statusbarPush statusbar contextId msg
@@ -222,8 +222,8 @@ setupEvaluatorUI examples xml window getEnv =
                            , tbdUseB = True
                            , tbdUseC = True } )
                   ,(True,
-                    do let msg = "Паника: Значение радиокнопки определяющее что вычислять\
-                                  \ какое-то невменяемое!" 
+                    do let msg = "Panic: Radiobutton's value wich defined what\
+                                  \ to evaluate is insane!" 
                        msgBox (Just window) [] MessageWarning ButtonsOk $ msg
                        error msg)
                   ]
@@ -235,7 +235,7 @@ setupEvaluatorUI examples xml window getEnv =
          getNSteps f =
            do text <- get entryNSteps entryText
               (readIO text >>= \(i :: Int) -> f i) `catch` \(e::SomeException) ->
-                do msgBox (Just window) [] MessageWarning ButtonsOk $ "Число шагов указано неверно: " ++ show text ++ ": " ++ show e
+                do msgBox (Just window) [] MessageWarning ButtonsOk $ "Number of steps is wrong: " ++ show text ++ ": " ++ show e
                    return ()
          getSteps f =
            do steps <- readIORef resultIORef
@@ -246,7 +246,7 @@ setupEvaluatorUI examples xml window getEnv =
                   do let exprRes = Parsec.parse (Lambda.parser >>= \t -> skipMany space >> eof >> return t) "" text
                      case exprRes of
                        (Left err) ->
-                         do msgBox (Just window) [] MessageWarning ButtonsOk $ "Введён неверный текст: " ++ show err
+                         do msgBox (Just window) [] MessageWarning ButtonsOk $ "Wrong text: " ++ show err
                             writeIORef resultIORef Error
                             return ()
                        (Right term) ->
@@ -269,10 +269,10 @@ setupEvaluatorUI examples xml window getEnv =
      onToggled checkbuttonDisableK $
        do notUseK <- get checkbuttonDisableK toggleButtonActive
           if notUseK
-            then do set radioButtonToIs [buttonLabel := "Разложение в (I, S)"]
-                    set radioButtonToIbcs [buttonLabel := "Разложение в (I, B, C, S)"]
-            else do set radioButtonToIs [buttonLabel := "Разложение в (I, K, S)"]
-                    set radioButtonToIbcs [buttonLabel := "Разложение в (I, K, B, C, S)"]
+            then do set radioButtonToIs [buttonLabel := "Convert to (I, S)"]
+                    set radioButtonToIbcs [buttonLabel := "Convert to (I, B, C, S)"]
+            else do set radioButtonToIs [buttonLabel := "Convert to (I, K, S)"]
+                    set radioButtonToIbcs [buttonLabel := "Convert to (I, K, B, C, S)"]
      do entry <- binGetChild comboBoxEntryInput
         case entry of
          (Just entry) -> onEditableChanged (castToEntry entry) cleanSteps >> return ()
@@ -324,9 +324,9 @@ setupEvalTreeView xml =
       treeViewColumnSetSizing col2 TreeViewColumnAutosize
       treeViewColumnSetSizing col3 TreeViewColumnAutosize
 
-      GtkMV.treeViewColumnSetTitle col1 "Постулат"
-      GtkMV.treeViewColumnSetTitle col2 "Терм"
-      GtkMV.treeViewColumnSetTitle col3 "Номер шага"
+      GtkMV.treeViewColumnSetTitle col1 "Axiom scheme"
+      GtkMV.treeViewColumnSetTitle col2 "Term"
+      GtkMV.treeViewColumnSetTitle col3 "Step's number"
 
       renderer1 <- GtkMV.cellRendererTextNew
       renderer2 <- GtkMV.cellRendererTextNew
@@ -352,7 +352,7 @@ setupExamples view examples =
 
 loadData :: IO ([Term], Map.Map String Term)     
 loadData = 
-  do examples <- handle (\(e :: SomeException) -> msgBox Nothing [] MessageWarning ButtonsOk ("Ошибка чтения файла примеров: " ++ show e) >> return []) $
+  do examples <- handle (\(e :: SomeException) -> msgBox Nothing [] MessageWarning ButtonsOk ("Error reading examples file: " ++ show e) >> return []) $
        do examplesFileName <- getDataFileName "examples.txt"
           examplesLines <- fmap lines $ readFile examplesFileName
           let parsings :: [Term]
@@ -362,7 +362,7 @@ loadData =
               fromEither :: Either ParseError Term -> [Term]
               fromEither = either (const []) (\t -> [t])
           return parsings
-     env <- handle (\(e :: SomeException) -> msgBox Nothing [] MessageWarning ButtonsOk ("Ошибка чтения файла окружения: " ++ show e) >> return Map.empty) $
+     env <- handle (\(e :: SomeException) -> msgBox Nothing [] MessageWarning ButtonsOk ("Error reading evironment file: " ++ show e) >> return Map.empty) $
        do environmentFileName <- getDataFileName "environment.txt"
           environmentLines <- fmap lines $ readFile environmentFileName
           let parsings :: Map.Map String Term

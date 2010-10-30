@@ -1,7 +1,7 @@
 (\a b. b a) b a
-если истина a b
-если ложь a b
-если истина (сложить четыре пять) (перемножить два три)
-факториал четыре
-сумма (cons один (cons два (cons три (cons пять nil))))
-(\альфа бета. бета альфа) гамма эта
+if true a b
+if false a b
+if true (add four five) (mul two three)
+factorial four
+sum (cons one (cons two (cons three (cons five nil))))
+(\alpha beta. beta alpha) gamma eta
